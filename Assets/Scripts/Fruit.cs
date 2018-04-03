@@ -43,10 +43,10 @@ public class Fruit : MonoBehaviour {
         }
 
         //  Play Slice Sound
-        FindObjectOfType<GameManager>().PlayRandomSliceSound();
+        GameManager.instance.PlayRandomSliceSound();
 
         //  Increase the Players score
-        FindObjectOfType<GameManager>().IncreaseScore(3);
+        GameManager.instance.IncreaseScore(3);
 
         //  Destory gameobject
         Destroy(inst.gameObject, 5);

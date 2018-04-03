@@ -6,6 +6,8 @@ using UnityEngine.Advertisements;
 
 public class GameManager : MonoBehaviour {
 
+    public static GameManager instance = null;
+
     [Header("Score Elements")]
     public int score;
     public int highscore;
@@ -22,11 +24,25 @@ public class GameManager : MonoBehaviour {
 
     private AudioSource audioSource;
 
-    private void Awake() {
-        Advertisement.Initialize("1616445");
+    private void Awake () {
+        MakeSingleton();
+        Advertisement.Initialize("999");
         audioSource = GetComponent<AudioSource>();
         gameOverPanel.SetActive(false);
         GetHighscore();
+    }
+
+    /// <summary>
+    /// Workaround for singleton-Behaviour
+    /// </summary>
+    private void MakeSingleton() {
+        if (instance == null) {
+            instance = this;
+        }   else if (instance != this) {
+            Destroy(gameObject);
+        }
+
+        DontDestroyOnLoad(gameObject);        
     }
 
     /// <summary>
@@ -35,7 +51,7 @@ public class GameManager : MonoBehaviour {
     private void GetHighscore () {
 		highscore = PlayerPrefs.GetInt("Highscore");
 		highscoreText.text = "Best: " + highscore;
-    }
+    }    
 
     /// <summary>
     /// Increases the current score
